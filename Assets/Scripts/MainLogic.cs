@@ -2,6 +2,8 @@
 ///
 ///
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 
 
@@ -12,8 +14,9 @@ public class MainLogic : GenericSingletonClass<MainLogic>
     //tell which player won/ have a win and loose screen.
 
     [SerializeField] private GameObject winUI;
-    [SerializeField] private GameObject endUILocal;
     [SerializeField] private GameObject looseUI;
+    [SerializeField] private GameObject endUILocal;
+    [SerializeField] private TMP_Text endUIMessage;
 
     [SerializeField] private bool ranOuttaTime = false;
 
@@ -42,22 +45,27 @@ public class MainLogic : GenericSingletonClass<MainLogic>
             sumo.gameObject.SetActive(false);
         }
 
+        int winningPlayer = 0;
+
+        foreach (LocalBlackboard player in Object.FindObjectsOfType<LocalBlackboard>())
+        {
+            if (player.currentReincarnation != 2)
+            {
+                winningPlayer = player.controllerSet;
+                break;
+            }
+        }
+
 
         if (ranOuttaTime)
         {
             endUILocal.SetActive(true);
+            endUIMessage.text = "Player " + winningPlayer + " wins!\nThe rest of you can shove off.";
         }
         else
         {
             bool won = false;
-            foreach(LocalBlackboard player in Object.FindObjectsOfType<LocalBlackboard>())
-            {
-                if(player.currentReincarnation != 2)
-                {
-                    won = true;
-                    break;
-                }
-            }
+            won = (winningPlayer == GlobalBlackboard.Instance.myPlsyerID);
 
 
             if (won)
@@ -69,5 +77,12 @@ public class MainLogic : GenericSingletonClass<MainLogic>
                 looseUI.SetActive(true);
             }
         }
+    }
+
+
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(0);
+        Destroy(this.gameObject);
     }
 }
