@@ -68,12 +68,12 @@ public class LocalBlackboard : MonoBehaviour
 
 
     #region Debug
-    //private void Update()
-    //{
-    //      foreach(CharacterInfo c in characterInfo)
-    //      {
-    //          c.sqrMaxSpeed = c.maxSpeed* c.maxSpeed;
-    //      }
-    //}
+    private void Update()
+    {
+        foreach (CharacterInfo c in characterInfo)
+        {
+            c.sqrMaxSpeed = c.maxSpeed * c.maxSpeed;
+        }
+    }
     #endregion
 }
