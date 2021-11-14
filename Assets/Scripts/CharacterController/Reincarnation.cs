@@ -46,6 +46,8 @@ public class Reincarnation : MonoBehaviour
 
 
         localBlackboard.rb.useGravity = localBlackboard.characterInfo[localBlackboard.currentReincarnation].useGravity;
+        localBlackboard.rb.angularVelocity = Vector3.zero;
+        localBlackboard.rb.velocity = Vector3.zero;
 
         if (localBlackboard.characterInfo[localBlackboard.currentReincarnation].lockYAxis)
             localBlackboard.rb.constraints = RigidbodyConstraints.FreezePositionY;
