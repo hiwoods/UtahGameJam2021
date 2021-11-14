@@ -11,4 +11,5 @@ public class LocalBlackboard : MonoBehaviour
     public Rigidbody rb;
 
     public float moveSpeed = 5;
+    public Transform moverTransform;
 }
