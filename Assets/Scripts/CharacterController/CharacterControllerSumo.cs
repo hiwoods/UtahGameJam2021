@@ -56,7 +56,7 @@ public class CharacterControllerSumo : MonoBehaviour
     private void RotatePlayer()
     {
         Quaternion targetRot;
-        targetRot = Quaternion.identity * ;
+        targetRot = Quaternion.identity ;
         //localBlackboard.moverTransform.rotation  = Quaternion.Slerp(localBlackboard.moverTransform.rotation, targetRot, localBlackboard.rotateCharacter.CalcRotSpeed());
     }
     #endregion
