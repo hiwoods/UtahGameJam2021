@@ -10,6 +10,7 @@ public class Diable : MonoBehaviour
 {
     private LocalBlackboard localBlackboard;
 
+    public bool isDead = false;
     public void Setup(LocalBlackboard _localBlackboard)
     {
         localBlackboard = _localBlackboard;
@@ -37,6 +38,7 @@ public class Diable : MonoBehaviour
     //temp solution until the shark thing is added
     private IEnumerator DeathDelay()
     {
+        isDead = true;
         yield return new WaitForSeconds(2f);
         Die();
     }
@@ -46,5 +48,6 @@ public class Diable : MonoBehaviour
         localBlackboard.characterInfo[localBlackboard.currentReincarnation].deathVFX.SetActive(true);
         localBlackboard.characterInfo[localBlackboard.currentReincarnation].charModel.SetActive(false);
         localBlackboard.reincarnation.Reincarnate();
+        isDead = false;
     }
 }
