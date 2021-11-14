@@ -149,7 +149,7 @@ public class CharacterControllerSumo : MonoBehaviour
         if (poopReady && localBlackboard.currentReincarnation == 2)
         {
             poopReady = false;
-            Instantiate(localBlackboard.poopPrefab, localBlackboard.moverTransform.position, Quaternion.identity);
+            Instantiate(localBlackboard.poopPrefab, localBlackboard.moverTransform.position + localBlackboard.poopSpawnOffset, Quaternion.identity);
             StartCoroutine(PoopRecharge());
         }
     }

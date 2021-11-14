@@ -40,6 +40,7 @@ public class LocalBlackboard : MonoBehaviour
 
         public int mass = 1;
         public bool useGravity = true;
+        public bool lockYAxis = false;
 
         public GameObject charModel;
         public GameObject spawnVFX;
@@ -53,7 +54,7 @@ public class LocalBlackboard : MonoBehaviour
 
     public float poopRechargeTime = 1f;
     public GameObject poopPrefab;
-
+    public Vector3 poopSpawnOffset;
 
     private void Awake()
     {

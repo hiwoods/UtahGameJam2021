@@ -8,10 +8,12 @@ using UnityEngine;
 public class Reincarnation : MonoBehaviour
 {
     private LocalBlackboard localBlackboard;
+    private RigidbodyConstraints oldConstraints;
 
     public void Setup(LocalBlackboard _localBlackboard)
     {
         localBlackboard = _localBlackboard;
+        oldConstraints = localBlackboard.rb.constraints;
     }
 
 
@@ -44,6 +46,12 @@ public class Reincarnation : MonoBehaviour
 
 
         localBlackboard.rb.useGravity = localBlackboard.characterInfo[localBlackboard.currentReincarnation].useGravity;
+
+        if (localBlackboard.characterInfo[localBlackboard.currentReincarnation].lockYAxis)
+            localBlackboard.rb.constraints = RigidbodyConstraints.FreezePositionY;
+        else
+            localBlackboard.rb.constraints = oldConstraints;
+
         localBlackboard.rb.mass = localBlackboard.characterInfo[localBlackboard.currentReincarnation].mass;
         localBlackboard.characterInfo[localBlackboard.currentReincarnation].charModel.SetActive(true);
 
