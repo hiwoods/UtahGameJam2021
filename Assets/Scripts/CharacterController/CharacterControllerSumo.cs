@@ -10,17 +10,22 @@ public class CharacterControllerSumo : MonoBehaviour
     {
         Subscribe();
     }
+
+
+
+    #region Subscription Crap
     private void Subscribe()
     {
         InputManager.Instance._useHorizontalInput[localBlackboard.controllerSet] += GrabHorzAxis;
         InputManager.Instance._useVerticalInput[localBlackboard.controllerSet] += GrabVertAxis;
+        InputManager.Instance._useDashButton[localBlackboard.controllerSet] += Dash;
     }
     private void UnSubscribe()
     {
         InputManager.Instance._useHorizontalInput[localBlackboard.controllerSet] -= GrabHorzAxis;
         InputManager.Instance._useVerticalInput[localBlackboard.controllerSet] -= GrabVertAxis;
     }
-
+    #endregion
 
 
 
@@ -28,6 +33,7 @@ public class CharacterControllerSumo : MonoBehaviour
     {
         MovePlayer();
     }
+
 
     #region Movement
     private Vector2 moveInput;
@@ -41,6 +47,29 @@ public class CharacterControllerSumo : MonoBehaviour
     private void GrabVertAxis(float vertAxis)
     {
         moveInput.y = vertAxis;
+    }
+
+
+
+    private bool canDash = true;
+    private void Dash()
+    {
+        if (!canDash)
+            return;
+
+
+        Vector3 moveDir = new Vector3(localBlackboard.moverTransform.eulerAngles.x, 0, localBlackboard.moverTransform.eulerAngles.z);
+
+        localBlackboard.rb.AddForce(moveDir * localBlackboard.dashSpeed, ForceMode.VelocityChange);
+        StartCoroutine(DashCooldown());
+    }
+
+
+    private IEnumerator DashCooldown()
+    {
+        canDash = false;
+        yield return new WaitForSeconds(localBlackboard.dashCooldownTime);
+        canDash = true;
     }
 
 
@@ -82,4 +111,12 @@ public class CharacterControllerSumo : MonoBehaviour
         localBlackboard.moverTransform.rotation  = Quaternion.Slerp(localBlackboard.moverTransform.rotation, Quaternion.LookRotation(rotDir), Time.deltaTime * localBlackboard.rotationSpeed);
     }
     #endregion
+
+
+
+
+    private void OnDestroy()
+    {
+        UnSubscribe();
+    }
 }

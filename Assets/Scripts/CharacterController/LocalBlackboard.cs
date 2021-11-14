@@ -18,6 +18,9 @@ public class LocalBlackboard : MonoBehaviour
     [HideInInspector]
     public float sqrMaxSpeed = 60f;
 
+    public float dashSpeed = 10f;
+    public float dashCooldownTime = 1f;
+
     private void Awake()
     {
         sqrMaxSpeed = maxSpeed * maxSpeed;
