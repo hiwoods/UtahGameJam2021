@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class GlobalBlackboard : GenericSingletonClass<GlobalBlackboard>
 {
+    public int myPlsyerID = 0;
     public int playersOnIce = 3;
 
     public Vector3 standardSpawnPos;

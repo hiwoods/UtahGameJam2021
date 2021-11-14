@@ -16,7 +16,7 @@ public class LocalBlackboard : MonoBehaviour
     #endregion
 
 
-
+    [Space(10)]
     public int controllerSet = 0;
     public Rigidbody rb;
 

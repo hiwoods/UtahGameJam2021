@@ -14,6 +14,7 @@ public class CharacterControllerSumo : MonoBehaviour
         Subscribe();
         localBlackboard.diable?.Setup(localBlackboard);
         localBlackboard.reincarnation?.Setup(localBlackboard);
+        MainLogic.Instance.AddPlayerOnIce();
     }
 
 

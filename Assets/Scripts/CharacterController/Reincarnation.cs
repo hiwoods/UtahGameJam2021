@@ -26,10 +26,21 @@ public class Reincarnation : MonoBehaviour
 
     private void ChangeCharacters()
     {
-        if (localBlackboard.currentReincarnation < 2)
+        if (localBlackboard.currentReincarnation == 0)
+        {
             localBlackboard.currentReincarnation++;
+        }
+        else if(localBlackboard.currentReincarnation == 1)
+        {
+            localBlackboard.currentReincarnation++;
+            MainLogic.Instance.RemovePlayerFromIce();
+        }
         else
+        {
             localBlackboard.currentReincarnation = 0;
+            MainLogic.Instance.AddPlayerOnIce();
+        }
+
 
 
         localBlackboard.rb.useGravity = localBlackboard.characterInfo[localBlackboard.currentReincarnation].useGravity;
