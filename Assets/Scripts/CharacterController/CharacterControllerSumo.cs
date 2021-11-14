@@ -120,10 +120,14 @@ public class CharacterControllerSumo : MonoBehaviour
 
     public void MovePlayer(Vector3 moveDir)
     {
-        //ClampSpeed();
+        float tempMagnitude = localBlackboard.rb.velocity.sqrMagnitude;
 
-        localBlackboard.rb.AddForce(moveDir * localBlackboard.characterInfo[localBlackboard.currentReincarnation].moveSpeed);
-        RotatePlayer(moveDir);
+        //(can still go faster but won't add standard run force in maxed out direction)
+        if (tempMagnitude <= localBlackboard.characterInfo[localBlackboard.currentReincarnation].sqrMaxSpeed)
+        {
+            localBlackboard.rb.AddForce(moveDir * localBlackboard.characterInfo[localBlackboard.currentReincarnation].moveSpeed);
+            RotatePlayer(moveDir);
+        }
     }
 
     public void RotatePlayer(Vector3 rotDir)
