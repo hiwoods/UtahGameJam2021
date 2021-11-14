@@ -32,7 +32,7 @@ public class MainLogic : GenericSingletonClass<MainLogic>
         if (playerCount == 4)
             return;
 
-        for (int i = 4; i >= playerCount; i--)
+        for (int i = 4; i > playerCount; i--)
         {
             var playerGO = GameObject.FindGameObjectWithTag($"Player{i}");
             playerGO.AddComponent<SimpleAIController>();
