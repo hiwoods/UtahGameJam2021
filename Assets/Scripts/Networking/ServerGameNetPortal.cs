@@ -11,6 +11,8 @@ namespace Networking
     {
         private GameNetPortal Portal;
 
+        public Dictionary<ulong, int> ClientSceneMap = new Dictionary<ulong, int>();
+
         // Start is called before the first frame update
         void Start()
         {
@@ -28,7 +30,7 @@ namespace Networking
                 //O__O if adding any event registrations here, please add an unregistration in OnClientDisconnect.
                 //Portal.NetworkManager.OnClientDisconnectCallback += OnClientDisconnect;
 
-                NetworkManager.Singleton.SceneManager.LoadScene("LevelTest_1", LoadSceneMode.Single);
+                NetworkManager.Singleton.SceneManager.LoadScene("GlacierLevel_1", LoadSceneMode.Single);
 
                 if (Portal.NetworkManager.IsHost)
                 {
