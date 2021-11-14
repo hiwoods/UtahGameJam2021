@@ -133,7 +133,7 @@ public class CharacterControllerSumo : MonoBehaviour
     private bool poopReady = true;
     private void Poop()
     {
-        if (poopReady)
+        if (poopReady && localBlackboard.currentReincarnation == 2)
         {
             poopReady = false;
             Instantiate(localBlackboard.poopPrefab, localBlackboard.moverTransform.position, Quaternion.identity);
