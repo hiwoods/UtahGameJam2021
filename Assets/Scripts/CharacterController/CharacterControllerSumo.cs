@@ -60,14 +60,12 @@ public class CharacterControllerSumo : MonoBehaviour
     private bool canDash = true;
     private void Dash()
     {
-        Debug.Log("Can dash" + canDash);
         if (!canDash)
             return;
 
+        Vector3 moveDir = new Vector3(localBlackboard.moverTransform.forward.x, 0, localBlackboard.moverTransform.forward.z);
 
-        //Vector3 moveDir = new Vector3(localBlackboard.moverTransform.eulerAngles.x, 0, localBlackboard.moverTransform.eulerAngles.z);
-
-        localBlackboard.rb.AddForce(localBlackboard.moverTransform.forward * localBlackboard.characterInfo[localBlackboard.currentReincarnation].dashSpeed, ForceMode.VelocityChange);
+        localBlackboard.rb.AddForce(moveDir * localBlackboard.characterInfo[localBlackboard.currentReincarnation].dashSpeed, ForceMode.VelocityChange);
         StartCoroutine(DashCooldown());
     }
 
