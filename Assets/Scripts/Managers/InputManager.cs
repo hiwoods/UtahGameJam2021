@@ -59,8 +59,6 @@ public class InputManager : GenericSingletonClass<InputManager>
     {
         for(int i = 0; i < controlSets.Count; i++)
         {
-            Debug.Log("I = " + i);
-            Debug.Log("Delegate count " + _useHorizontalInput.Count);
             #region Axis Input Gather
             _useHorizontalInput[i](GatherAxisInput(controlSets[i].horizontalMove));
             _useVerticalInput[i](GatherAxisInput(controlSets[i].verticalMove));
@@ -87,7 +85,6 @@ public class InputManager : GenericSingletonClass<InputManager>
     private float GatherAxisInput(string axisName)
     {
         tempFloat = Input.GetAxis(axisName);
-        Debug.Log(axisName + " Input  " + tempFloat);
         return tempFloat;
     }
 
