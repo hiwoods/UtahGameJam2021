@@ -41,30 +41,32 @@ namespace Assets.Scripts.CharacterController
             if (Diable.isDead)
                 return;
 
-            if (LocalBlackboard.currentReincarnation == 0) //walrus
+            var otherPlayer = otherPlayers.Where(x => !GetDiable(x).isDead).Where(x =>
             {
-                var otherPlayer = otherPlayers.Where(x => !GetDiable(x).isDead).Where(x =>
-                {
-                    var loca = GetLocalBlackboard(x);
+                var loca = GetLocalBlackboard(x);
 
-                    return loca.currentReincarnation == 0 || loca.currentReincarnation == 1;
-                }).OrderBy(x => Vector3.Distance(x.transform.position, gameObject.transform.position))
+                return loca.currentReincarnation == 0 || loca.currentReincarnation == 1;
+            }).OrderBy(x => Vector3.Distance(x.transform.position, gameObject.transform.position))
                 .FirstOrDefault();
 
-                if (otherPlayer == null)
-                    return;
+            if (otherPlayer == null)
+                return;
 
-                var dir = (otherPlayer.transform.position - transform.position).normalized;
+            var dir = (otherPlayer.transform.position - transform.position).normalized;
 
-                CharacterControllerSumo.MovePlayer(dir);
+            CharacterControllerSumo.MovePlayer(dir);
+
+            if (LocalBlackboard.currentReincarnation == 0) //walrus
+            {
+                CharacterControllerSumo.Dash();
             }
             else if (LocalBlackboard.currentReincarnation == 1)
             {
-
+                CharacterControllerSumo.Dash();
             }
             else if (LocalBlackboard.currentReincarnation == 2)
             {
-
+                CharacterControllerSumo.Poop();
             }
 
         }

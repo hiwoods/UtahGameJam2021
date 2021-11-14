@@ -66,7 +66,7 @@ public class CharacterControllerSumo : MonoBehaviour
 
 
     private bool canDash = true;
-    private void Dash()
+    public void Dash()
     {
         if (!canDash || localBlackboard.currentReincarnation == 2)
             return;
@@ -143,12 +143,9 @@ public class CharacterControllerSumo : MonoBehaviour
     #endregion
 
 
-
-
-
     #region Seagull
     private bool poopReady = true;
-    private void Poop()
+    public void Poop()
     {
         if (poopReady && localBlackboard.currentReincarnation == 2)
         {
