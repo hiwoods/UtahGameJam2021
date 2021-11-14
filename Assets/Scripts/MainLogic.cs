@@ -2,8 +2,7 @@
 ///
 ///
 using UnityEngine;
-
-
+using UnityEngine.SceneManagement;
 
 public class MainLogic : GenericSingletonClass<MainLogic>
 {
@@ -69,5 +68,12 @@ public class MainLogic : GenericSingletonClass<MainLogic>
                 looseUI.SetActive(true);
             }
         }
+    }
+
+
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(0);
+        Destroy(this.gameObject);
     }
 }
