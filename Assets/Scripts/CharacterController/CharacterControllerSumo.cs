@@ -118,6 +118,19 @@ public class CharacterControllerSumo : MonoBehaviour
         }
     }
 
+    public void MovePlayer(Vector3 moveDir)
+    {
+        //ClampSpeed();
+
+        localBlackboard.rb.AddForce(moveDir * localBlackboard.characterInfo[localBlackboard.currentReincarnation].moveSpeed);
+        RotatePlayer(moveDir);
+    }
+
+    public void RotatePlayer(Vector3 rotDir)
+    {
+        localBlackboard.moverTransform.rotation = Quaternion.Slerp(localBlackboard.moverTransform.rotation, Quaternion.LookRotation(rotDir), Time.deltaTime * localBlackboard.characterInfo[localBlackboard.currentReincarnation].rotationSpeed);
+    }
+
     private void RotatePlayer()
     {
         Vector3 rotDir = new Vector3(moveInput.x, 0, moveInput.y);
