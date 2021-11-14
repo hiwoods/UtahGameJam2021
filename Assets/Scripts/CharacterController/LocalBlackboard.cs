@@ -51,7 +51,8 @@ public class LocalBlackboard : MonoBehaviour
 
     public Transform moverTransform;
 
-
+    public float poopRechargeTime = 1f;
+    public GameObject poopPrefab;
 
 
     private void Awake()

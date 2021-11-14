@@ -25,11 +25,14 @@ public class CharacterControllerSumo : MonoBehaviour
         InputManager.Instance._useHorizontalInput[localBlackboard.controllerSet] += GrabHorzAxis;
         InputManager.Instance._useVerticalInput[localBlackboard.controllerSet] += GrabVertAxis;
         InputManager.Instance._useDashButton[localBlackboard.controllerSet] += Dash;
+        InputManager.Instance._useDashButton[localBlackboard.controllerSet] += Poop;
     }
     private void UnSubscribe()
     {
         InputManager.Instance._useHorizontalInput[localBlackboard.controllerSet] -= GrabHorzAxis;
         InputManager.Instance._useVerticalInput[localBlackboard.controllerSet] -= GrabVertAxis;
+        InputManager.Instance._useDashButton[localBlackboard.controllerSet] -= Dash;
+        InputManager.Instance._useDashButton[localBlackboard.controllerSet] -= Poop;
     }
     #endregion
 
@@ -40,6 +43,10 @@ public class CharacterControllerSumo : MonoBehaviour
         if(localBlackboard.movementEnabled)
             MovePlayer();
     }
+
+
+
+
 
 
     #region Movement
@@ -61,7 +68,7 @@ public class CharacterControllerSumo : MonoBehaviour
     private bool canDash = true;
     private void Dash()
     {
-        if (!canDash)
+        if (!canDash || localBlackboard.currentReincarnation == 2)
             return;
 
         Vector3 moveDir = new Vector3(localBlackboard.moverTransform.forward.x, 0, localBlackboard.moverTransform.forward.z);
@@ -115,6 +122,30 @@ public class CharacterControllerSumo : MonoBehaviour
     {
         Vector3 rotDir = new Vector3(moveInput.x, 0, moveInput.y);
         localBlackboard.moverTransform.rotation  = Quaternion.Slerp(localBlackboard.moverTransform.rotation, Quaternion.LookRotation(rotDir), Time.deltaTime * localBlackboard.characterInfo[localBlackboard.currentReincarnation].rotationSpeed);
+    }
+    #endregion
+
+
+
+
+
+    #region Seagull
+    private bool poopReady = true;
+    private void Poop()
+    {
+        if (poopReady)
+        {
+            poopReady = false;
+            Instantiate(localBlackboard.poopPrefab, localBlackboard.moverTransform.position, Quaternion.identity);
+            StartCoroutine(PoopRecharge());
+        }
+    }
+
+
+    private IEnumerator PoopRecharge()
+    {
+        yield return new WaitForSeconds(localBlackboard.poopRechargeTime);
+        poopReady = true;
     }
     #endregion
 }
