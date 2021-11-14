@@ -35,8 +35,6 @@ public class MainLogic : GenericSingletonClass<MainLogic>
         }
     }
 
-
-
     private void EndGame()
     {
         //disable all characters
