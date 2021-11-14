@@ -6,7 +6,7 @@ public class PoopExplosion : MonoBehaviour
 {
     [SerializeField] private float poopKillTime = 5f;
     [SerializeField] private float explosionForce = 60f;
-    [SerializeField] private float explosionRadius = 5f;
+    [SerializeField] private float explosionRadius = 15f;
     [SerializeField] private float upwardsPush = 10f;
     [SerializeField] private float disableTime = 1f;
     private Coroutine killRoutine;
@@ -18,11 +18,20 @@ public class PoopExplosion : MonoBehaviour
     {
         //grab all collided stuff, add explosion force to them
 
-        if (other.GetComponent<Rigidbody>() != null)
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
+        foreach (Collider hit in colliders)
         {
-            rb = other.GetComponent<Rigidbody>();
-            rb.AddExplosionForce(explosionForce, this.transform.position, explosionRadius, upwardsPush);
+            Rigidbody rb = hit.GetComponent<Rigidbody>();
+
+            if (rb != null)
+                rb.AddExplosionForce(explosionForce, transform.position, explosionRadius, upwardsPush, ForceMode.Impulse);
         }
+
+        //if (other.GetComponent<Rigidbody>() != null)
+        //{
+        //    rb = other.GetComponent<Rigidbody>();
+        //    rb.AddExplosionForce(explosionForce, this.transform.position, explosionRadius, upwardsPush);
+        //}
 
 
 
