@@ -8,6 +8,7 @@ namespace Networking
 {
     public class GameNetPortal : MonoBehaviour
     {
+        public string PlayerName = "Test Player Name";
         public static GameNetPortal Instance;
 
         public NetworkManager NetworkManager;
@@ -70,8 +71,6 @@ namespace Networking
 
             chosenTransport.ConnectAddress = ipaddress;
             chosenTransport.ServerListenPort = port;
-
-            Debug.Log($"Starting host at {ipaddress}:{port}");
 
             NetworkManager.StartHost();
         }
