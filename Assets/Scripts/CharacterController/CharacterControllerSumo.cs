@@ -50,14 +50,13 @@ public class CharacterControllerSumo : MonoBehaviour
         if(moveInput.x != 0 || moveInput.y != 0)
         {
             localBlackboard.rb.AddForce(moveDir * localBlackboard.moveSpeed);
+            RotatePlayer(moveDir);
         }
     }
 
-    private void RotatePlayer()
+    private void RotatePlayer(Vector3 rotDir)
     {
-        Quaternion targetRot;
-        targetRot = Quaternion.identity * ;
-        //localBlackboard.moverTransform.rotation  = Quaternion.Slerp(localBlackboard.moverTransform.rotation, targetRot, localBlackboard.rotateCharacter.CalcRotSpeed());
+        localBlackboard.moverTransform.rotation  = Quaternion.Slerp(localBlackboard.moverTransform.rotation, Quaternion.LookRotation(rotDir), Time.deltaTime * localBlackboard.rotationSpeed);
     }
     #endregion
 }
