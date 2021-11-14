@@ -1,35 +1,77 @@
 ///
-///
+///Shared Variable storage for the character controller
 ///
 using UnityEngine;
+using System;
+using System.Collections.Generic;
 
 
 
 public class LocalBlackboard : MonoBehaviour
 {
+    #region Modules
+    public Reincarnation reincarnation;
+    public Diable diable;
+    public CharacterControllerSumo sumo;
+    #endregion
+
+
+
     public int controllerSet = 0;
     public Rigidbody rb;
 
-    public float moveSpeed = 5f;
-    public Transform moverTransform;
-    public float rotationSpeed = 10f;
-
-    public float maxSpeed = 1f;
     [HideInInspector]
-    public float sqrMaxSpeed = 60f;
+    public bool movementEnabled = true;
 
-    public float dashSpeed = 10f;
-    public float dashCooldownTime = 1f;
+    public int currentReincarnation = 0;
+
+    [Serializable]
+    public class CharacterInfo
+    {
+        public float moveSpeed = 5f;
+        public float rotationSpeed = 10f;
+
+        public float maxSpeed = 1f;
+        [HideInInspector]
+        public float sqrMaxSpeed = 60f;
+
+        public float dashSpeed = 10f;
+        public float dashCooldownTime = 1f;
+
+        public int mass = 1;
+        public bool useGravity = true;
+
+        public GameObject charModel;
+        public GameObject spawnVFX;
+        public GameObject deathVFX;
+        public GameObject hitWaterVFX;
+    }
+
+    public List<CharacterInfo> characterInfo = new List<CharacterInfo>();
+
+    public Transform moverTransform;
+
+
+
 
     private void Awake()
     {
-        sqrMaxSpeed = maxSpeed * maxSpeed;
+        foreach(CharacterInfo c in characterInfo)
+        {
+            c.sqrMaxSpeed = c.maxSpeed * c.maxSpeed;
+        }
     }
+
+
+
 
     #region Debug
     //private void Update()
     //{
-    //    sqrMaxSpeed = maxSpeed * maxSpeed;
+    //      foreach(CharacterInfo c in characterInfo)
+    //      {
+    //          c.sqrMaxSpeed = c.maxSpeed* c.maxSpeed;
+    //      }
     //}
     #endregion
 }
