@@ -1,14 +1,19 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+
 
 public class CharacterControllerSumo : MonoBehaviour
 {
     [SerializeField] private LocalBlackboard localBlackboard;
 
+
+    
     private void Start()
     {
         Subscribe();
+        localBlackboard.diable?.Setup(localBlackboard);
+        localBlackboard.reincarnation?.Setup(localBlackboard);
     }
 
 
@@ -31,7 +36,8 @@ public class CharacterControllerSumo : MonoBehaviour
 
     private void Update()
     {
-        MovePlayer();
+        if(localBlackboard.movementEnabled)
+            MovePlayer();
     }
 
 
@@ -57,10 +63,9 @@ public class CharacterControllerSumo : MonoBehaviour
         if (!canDash)
             return;
 
+        Vector3 moveDir = new Vector3(localBlackboard.moverTransform.forward.x, 0, localBlackboard.moverTransform.forward.z);
 
-        Vector3 moveDir = new Vector3(localBlackboard.moverTransform.eulerAngles.x, 0, localBlackboard.moverTransform.eulerAngles.z);
-
-        localBlackboard.rb.AddForce(moveDir * localBlackboard.dashSpeed, ForceMode.VelocityChange);
+        localBlackboard.rb.AddForce(moveDir * localBlackboard.characterInfo[localBlackboard.currentReincarnation].dashSpeed, ForceMode.VelocityChange);
         StartCoroutine(DashCooldown());
     }
 
@@ -68,7 +73,7 @@ public class CharacterControllerSumo : MonoBehaviour
     private IEnumerator DashCooldown()
     {
         canDash = false;
-        yield return new WaitForSeconds(localBlackboard.dashCooldownTime);
+        yield return new WaitForSeconds(localBlackboard.characterInfo[localBlackboard.currentReincarnation].dashCooldownTime);
         canDash = true;
     }
 
@@ -78,7 +83,7 @@ public class CharacterControllerSumo : MonoBehaviour
         float tempMagnitude = localBlackboard.rb.velocity.sqrMagnitude;
 
         //(can still go faster but won't add standard run force in maxed out direction)
-        if (tempMagnitude > localBlackboard.sqrMaxSpeed)
+        if (tempMagnitude > localBlackboard.characterInfo[localBlackboard.currentReincarnation].sqrMaxSpeed)
         {
             if (Mathf.Sign(moveInput.x) == Mathf.Sign(localBlackboard.rb.velocity.x))
             {
@@ -100,7 +105,7 @@ public class CharacterControllerSumo : MonoBehaviour
 
         if(moveInput.x != 0 || moveInput.y != 0)
         {
-            localBlackboard.rb.AddForce(moveDir * localBlackboard.moveSpeed);
+            localBlackboard.rb.AddForce(moveDir * localBlackboard.characterInfo[localBlackboard.currentReincarnation].moveSpeed);
             RotatePlayer();
         }
     }
@@ -108,15 +113,7 @@ public class CharacterControllerSumo : MonoBehaviour
     private void RotatePlayer()
     {
         Vector3 rotDir = new Vector3(moveInput.x, 0, moveInput.y);
-        localBlackboard.moverTransform.rotation  = Quaternion.Slerp(localBlackboard.moverTransform.rotation, Quaternion.LookRotation(rotDir), Time.deltaTime * localBlackboard.rotationSpeed);
+        localBlackboard.moverTransform.rotation  = Quaternion.Slerp(localBlackboard.moverTransform.rotation, Quaternion.LookRotation(rotDir), Time.deltaTime * localBlackboard.characterInfo[localBlackboard.currentReincarnation].rotationSpeed);
     }
     #endregion
-
-
-
-
-    private void OnDestroy()
-    {
-        UnSubscribe();
-    }
 }
