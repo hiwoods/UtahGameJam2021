@@ -4,8 +4,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
-
-
+using Assets.Scripts.CharacterController;
 
 public class MainLogic : GenericSingletonClass<MainLogic>
 {
@@ -19,6 +18,26 @@ public class MainLogic : GenericSingletonClass<MainLogic>
     [SerializeField] private TMP_Text endUIMessage;
 
     [SerializeField] private bool ranOuttaTime = false;
+
+
+    private void Start()
+    {
+        AddAIComponent();
+    }
+
+    public void AddAIComponent()
+    {
+        int playerCount = GlobalBlackboard.Instance.playerCount;
+
+        if (playerCount == 4)
+            return;
+
+        for (int i = 4; i >= playerCount; i--)
+        {
+            var playerGO = GameObject.FindGameObjectWithTag($"Player{i}");
+            playerGO.AddComponent<SimpleAIController>();
+        }
+    }
 
     public void AddPlayerOnIce()
     {
