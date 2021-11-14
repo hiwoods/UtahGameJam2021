@@ -1,9 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Text;
 using Unity.Netcode;
-using Unity.Netcode.Transports.UNET;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -38,15 +35,17 @@ namespace Networking
 
         public void OnNetworkReady()
         {
-            enabled = Portal.NetworkManager.IsClient;
+            if (!Portal.NetworkManager.IsClient)
+            {
+                enabled = false;
+            }
         }
 
         public static void StartClient(GameNetPortal gameNetPortal, string ipAddress, int connectPort)
         {
-            var chosenTransport = NetworkManager.Singleton.NetworkConfig.NetworkTransport as UNetTransport;
+            var transport = NetworkManager.Singleton.NetworkConfig.NetworkTransport as UnityTransport;
 
-            chosenTransport.ConnectAddress = ipAddress;
-            chosenTransport.ServerListenPort = connectPort;
+            transport.SetConnectionData(ipAddress, (ushort)connectPort);
 
             ConnectClient(gameNetPortal);
         }
@@ -81,7 +80,7 @@ namespace Networking
             //and...we're off! Netcode will establish a socket connection to the host.
             //  If the socket connection fails, we'll hear back by getting an OnClientDisconnect callback for ourselves and get a message telling us the reason
             //  If the socket connection succeeds, we'll get our RecvConnectFinished invoked. This is where game-layer failures will be reported.
-            portal.NetworkManager.StartClient();
+            bool result = portal.NetworkManager.StartClient();
 
             // should only do this once StartClient has been called (start client will initialize CustomMessagingManager
             NetworkManager.Singleton.CustomMessagingManager.RegisterNamedMessageHandler(nameof(ReceiveServerToClientConnectResult), ReceiveServerToClientConnectResult);

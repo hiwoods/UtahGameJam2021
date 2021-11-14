@@ -18,7 +18,7 @@ namespace Networking
         private void Awake()
         {
             Instance = this;
-            NetworkManager = GetComponent<NetworkManager>();
+            NetworkManager = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<NetworkManager>();
             ClientPortal = GetComponent<ClientGameNetPortal>();
             ServerPortal = GetComponent<ServerGameNetPortal>();
         }
@@ -67,10 +67,9 @@ namespace Networking
 
         public void StartHost(string ipaddress, int port)
         {
-            var chosenTransport = NetworkManager.Singleton.NetworkConfig.NetworkTransport as UNetTransport;
+            var transport = NetworkManager.Singleton.NetworkConfig.NetworkTransport as UnityTransport;
 
-            chosenTransport.ConnectAddress = ipaddress;
-            chosenTransport.ServerListenPort = port;
+            transport.SetConnectionData(ipaddress, (ushort)port);
 
             NetworkManager.StartHost();
         }
