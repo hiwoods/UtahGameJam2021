@@ -102,4 +102,10 @@ public class MainLogic : GenericSingletonClass<MainLogic>
         SceneManager.LoadScene(0);
         Destroy(this.gameObject);
     }
+
+    public void GoToMain()
+    {
+        SceneManager.LoadScene(0);
+        Destroy(this.gameObject);
+    }
 }

@@ -50,7 +50,7 @@ public class Reincarnation : MonoBehaviour
         localBlackboard.rb.velocity = Vector3.zero;
 
         if (localBlackboard.characterInfo[localBlackboard.currentReincarnation].lockYAxis)
-            localBlackboard.rb.constraints = RigidbodyConstraints.FreezePositionY;
+            localBlackboard.rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         else
             localBlackboard.rb.constraints = oldConstraints;
 

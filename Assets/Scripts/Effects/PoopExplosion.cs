@@ -12,7 +12,7 @@ public class PoopExplosion : MonoBehaviour
     private Coroutine killRoutine;
     private Coroutine disableRoutine;
     private Rigidbody rb;
-
+    
 
     private void OnTriggerEnter(Collider other)
     {
@@ -21,10 +21,14 @@ public class PoopExplosion : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
         foreach (Collider hit in colliders)
         {
-            Rigidbody rb = hit.GetComponent<Rigidbody>();
+            if(hit.gameObject.layer != 8)
+            {
+                Rigidbody rb = hit.GetComponent<Rigidbody>();
 
-            if (rb != null)
-                rb.AddExplosionForce(explosionForce, transform.position, explosionRadius, upwardsPush, ForceMode.Impulse);
+                if (rb != null)
+                    rb.AddExplosionForce(explosionForce, transform.position, explosionRadius, upwardsPush, ForceMode.Impulse);
+            }
+
         }
 
         //if (other.GetComponent<Rigidbody>() != null)
